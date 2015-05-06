@@ -1,0 +1,67 @@
+#!/usr/bin/env perl
+# -*- mode: perl; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+
+use strict;
+
+use Getopt::Long;
+use Pod::Usage;
+
+my $thisname = undef;
+my $thatname = undef;
+
+my $rc = GetOptions('this=s' => \$thisname, 'that=s' => \$thatname);
+pod2usage(-exitval => 1) if !$rc or !($thisname && $thatname);
+
+undef $/;
+
+sub untaintname {
+    $_ = shift;
+    /(.*);?/ && return $1;
+}
+
+open THIS, "<$thisname" or die "Unable to open $thisname: $!";
+my $this = <THIS>;
+close THIS;
+open THAT, "<$thatname" or die "Unable to open $thatname: $!";
+my $that = <THAT>;
+close THAT;
+
+my $argv;
+
+foreach $argv (@ARGV) {
+    my $filename = &untaintname($argv);
+
+    open FD, "<$filename" or die "Unable to open $filename: $!";
+    my $data = <FD>;
+    close FD;
+
+    $data =~ s/\Q$this\E/$that/gm;
+
+    open FD, ">$filename" or die "Unable to open $filename: $!";
+    print FD $data;
+    close FD;
+}
+
+__END__
+
+=head1 NAME
+
+text-replace.pl - Replace text
+
+=head1 SYNOPSIS
+
+text-replace.pl --this=path/to/this --that=path/to/that filename1 filename2 ...
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--this>
+
+=item B<--that>
+
+=back
+
+=head1 DESCRIPTION
+
+=cut

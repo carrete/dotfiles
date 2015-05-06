@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+# docker ps  -a -q -f "status=exited" | sort | xargs -r -L1 docker rm
+# docker images -q -f "dangling=true" | sort | xargs -r -L1 docker image rm
+
+docker container prune -f
+docker image prune -f
+
+exit 0

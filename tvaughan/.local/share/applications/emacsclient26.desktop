@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=emacs26
+Name[en_US]=GNU Emacs 26 (Client)
+TryExec=emacsclient26
+Exec=emacsclient26 -c %F
+Name=GNU Emacs 26 (Client)
+Icon=emacs26
+StartupWMClass=Emacs26

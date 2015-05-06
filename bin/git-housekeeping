@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+git up
+git worktree prune
+git delete-merged-branches
+git gc --prune=now
+# TODO: This deletes stashes
+# git reflog expire --expire-unreachable=now --all

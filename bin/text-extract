@@ -1,0 +1,74 @@
+#!/usr/bin/env perl
+# -*- mode: perl; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+
+use strict;
+
+use Getopt::Long;
+use Pod::Usage;
+
+my $pattern = undef;
+my $reverse = undef;
+my $ignorecase = undef;
+my $multiline = undef;
+
+my $rc = GetOptions(
+    'pattern=s' => \$pattern,
+    'reverse' => \$reverse,
+    'ignorecase' => \$ignorecase,
+    'multiline' => \$multiline,
+);
+
+pod2usage(-exitval => 1) if !$rc or !$pattern;
+
+undef $/ if $multiline;
+
+while (<>) {
+    while (my @matches = /$pattern/gm) {
+	if ($reverse) {
+		@matches = reverse(@matches);
+	}
+	print join(',', @matches), "\n";
+	$_ = $'; # '
+    }
+    close if eof;
+}
+
+__END__
+
+=head1 NAME
+
+text-extract.pl - Extract and format data
+
+=head1 SYNOPSIS
+
+text-extract.pl --pattern='f(..)bar' [options] filename1 filename2 ...
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--pattern> (required)
+
+The regular expression pattern to match.
+See also: perlre.
+
+Example --pattern='f(..)bar' will match 'foobar', 'fxybar', etc.
+Only 'oo' and 'xy' will be printed.
+
+=item B<--reverse>
+
+Reverse the order of the matched patterns when printed.
+
+=item B<--ignorecase>
+
+Ignore case in pattern matches.
+
+=item B<--multiline>
+
+Allow pattern matches to span multiple lines.
+
+=back
+
+=head1 DESCRIPTION
+
+=cut

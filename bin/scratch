@@ -1,0 +1,8 @@
+#!/bin/sh -e
+# -*- coding: utf-8; mode: sh -*-
+REGISTRY=registry.gitlab.com
+CONTAINER=tvaughan/docker-ubuntu
+VERSION=18.04
+CMD=bash  # $(basename $0)
+docker run --rm -it -v "$PWD":/mnt/workdir $REGISTRY/$CONTAINER:$VERSION $CMD "$@"
+exit 0

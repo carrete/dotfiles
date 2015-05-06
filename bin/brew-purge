@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+errcode=0
+readonly script="$(readlink -f "$0")"
+
+function on_exit {
+    errcode=${1:-$errcode}
+    exit "$errcode"
+}
+
+trap on_exit EXIT
+
+function on_error {
+    errcode=$1
+    linenum=$2
+    echo "[ERROR] script: $script errcode: $errcode linenum: $linenum"
+}
+
+trap 'on_error $? $LINENO' ERR
+
+function usage {
+    cat <<__END_OF_USAGE__
+Usage: $(basename "$script") PACKAGE
+
+Purge PACKAGE and its dependencies.
+__END_OF_USAGE__
+}
+
+readonly USAGE=$(usage)
+
+readonly PACKAGE=${1:-""}
+
+if [[ -z $PACKAGE ]]
+then
+    echo "[ERROR]: Command-line options are incorrect."
+    echo "$USAGE"
+    on_exit 1
+fi
+
+for DEPENDENCY in $(brew deps "$PACKAGE")
+do
+    if brew ls --versions "$DEPENDENCY"
+    then
+        brew remove --ignore-dependencies "$DEPENDENCY"
+    fi
+done
+
+if brew ls --versions "$PACKAGE"
+then
+    brew remove "$PACKAGE"
+fi
+
+brew missing | cut -d: -f2 | sort | uniq | xargs -r brew install
+
+on_exit 0

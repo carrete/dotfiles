@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+brew update
+brew bundle --file="$HOME"/.dotfiles/Brewfile --no-lock
+brew upgrade
+brew cask upgrade
+brew cleanup --prune=0
+brew missing
+
+python3 -m pip install -U virtualenv virtualenvwrapper
+
+exit 0

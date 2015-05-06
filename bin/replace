@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+readonly FILENAME="$1"
+
+if [[ ! $FILENAME ]]
+then
+    echo Usage: "$(basename "$0")"
+    exit 1
+fi
+
+readonly TMPFILE=$(mktemp)
+cat - > "$TMPFILE"
+cp -a "$FILENAME" "$FILENAME".orig
+mv -f "$TMPFILE" "$FILENAME"

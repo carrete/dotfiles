@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+# set -euo pipefail
+# IFS=$'\n\t'
+
+# shellcheck source=/dev/null
+. "$(git --exec-path)"/git-sh-setup
+
+function usage() {
+    cat << __END_OF_USAGE__
+Usage: $(basename "$0") BRANCH
+
+BRANCH will be created if it does not exist. BRANCH will be used as the
+directory name of the new worktree.
+__END_OF_USAGE__
+}
+
+readonly USAGE=$(usage)
+
+function die() {
+    readonly RC=$1
+    shift
+    echo "$@"
+    exit "$RC"
+}
+
+readonly BRANCH=$1
+readonly REMOTE=origin
+
+if [[ -z $BRANCH ]]; then
+    die 0 "$USAGE"
+fi
+
+readonly PROJECT_DIR="$(readlink -f "$(git rev-parse --git-common-dir)"/../..)"
+
+if [ -d "$PROJECT_DIR"/"$BRANCH" ]; then
+    die 1 ERROR: "$(realpath --relative-to="$(pwd)" "$PROJECT_DIR"/"$BRANCH")" exists.
+fi
+
+if ! git branch | grep -qc "$BRANCH" > /dev/null 2>&1; then
+    if ! git branch -r | grep -qc $REMOTE/"$BRANCH" > /dev/null 2>&1; then
+        echo Creating branch \""$BRANCH"\" off of current branch \""$(git symbolic-ref --short HEAD)"\"
+        git branch "$BRANCH"
+    else
+        echo Creating branch \""$BRANCH"\" off of \"$REMOTE/"$BRANCH"\"
+        git branch "$BRANCH" $REMOTE/"$BRANCH"
+    fi
+fi
+
+git worktree add --force "$PROJECT_DIR"/"$BRANCH" "$BRANCH"
+
+exit 0

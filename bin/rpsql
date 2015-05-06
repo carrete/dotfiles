@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $(basename "$0") [host]"
+    exit 0
+fi
+
+readonly HOST="$1"
+readonly PORT=5432
+
+socat TCP4-LISTEN:"$PORT,bind=localhost,reuseport" EXEC:"ssh packer@'$HOST' sudo -i -u postgres nc --unixsock /var/run/postgresql/.s.PGSQL.5432"
+
+exit 0
+
+psql "postgresql://postgres@$HOST:$PORT/database-name"

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+for ZIPBALL in "$@"
+do
+    unzip -d "${ZIPBALL%*.zip}" "$ZIPBALL"
+done
+
+exit 0

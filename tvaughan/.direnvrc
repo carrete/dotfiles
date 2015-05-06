@@ -1,0 +1,2 @@
+DIRENV_BASH=/usr/local/bin/bash
+export DIRENV_BASH

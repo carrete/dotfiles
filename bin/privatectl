@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+case $1 in
+    mount)
+        encfs "$HOME"/Dropbox/Private "$HOME"/Documents/Private
+        ;;
+    umount|unmount)
+        umount "$HOME"/Documents/Private
+        ;;
+    *)
+        echo "Usage: $(basename "$0") mount|umount"
+        exit 1
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8; mode: sh -*-
+
+LP_COLOR_PATH=$BLUE
+export LP_COLOR_PATH

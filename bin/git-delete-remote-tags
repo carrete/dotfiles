@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+readonly REMOTE=$1
+
+git ls-remote --tags --refs "$REMOTE" | cut -f2 | xargs git push "$REMOTE" --delete
+
+exit 0

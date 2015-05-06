@@ -1,0 +1,51 @@
+[alias]
+        bd = diff -R
+        ci = commit
+        co = checkout
+        di = diff
+        ll = log --decorate --graph --oneline
+        patch = "!git --no-pager diff --no-color"
+        si = status --ignored
+        st = status --short --untracked-files=no
+        undo = reset --soft HEAD^
+        up = "!git fetch --all --prune && git merge --ff-only @{u}"
+[color]
+        branch = auto
+        diff = auto
+        status = auto
+[core]
+        autocrlf = input
+        safecrlf = true
+        pager = diff-so-fancy | less --tabs=4 -RFX
+[diff]
+        indentHeuristic = on
+	algorithm = patience
+[fetch]
+        prune = true
+[log]
+        decorate = full
+        topo-order = true
+[merge]
+        ff = only
+[push]
+        default = simple
+        followTags = true
+[stash]
+        showPatch = true
+[user]
+        name = Tom Vaughan
+        email = thomas.david.vaughan@gmail.com
+        signingkey = thomas.david.vaughan@gmail.com
+[magit]
+        hideCampaign = true
+[rebase]
+        autosquash = true
+[filter "lfs"]
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
+[diff-so-fancy]
+        markEmptyLines = false
+        useUnicodeRuler = false
+        rulerWidth = 42

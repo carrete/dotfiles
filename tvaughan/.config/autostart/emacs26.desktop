@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=emacs26 --daemon
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Emacs 26 (daemon)
+Name=Emacs 26 (daemon)
+Comment[en_US]=
+Comment=

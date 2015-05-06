@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+set -euo pipefail
+IFS=$'\n\t'
+
+autossh -M 0                                                                    \
+  -o "ExitOnForwardFailure=yes"                                                 \
+  -o "ServerAliveCountMax 3"                                                    \
+  -o "ServerAliveInterval 30"                                                   \
+  "$@"                                                                          \
+#
+
+exit 0
