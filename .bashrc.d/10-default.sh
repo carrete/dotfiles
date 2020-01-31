@@ -30,7 +30,7 @@ if command -v lesspipe > /dev/null 2>&1; then
 fi
 
 if command -v dircolors > /dev/null 2>&1; then
-    eval "$(dircolors -b)"
+  eval "$(dircolors -b "$HOME"/.dircolors.nord)"
 
   alias ls='ls $LS_OPTIONS --color=auto'
   alias grep='grep --color=auto'
