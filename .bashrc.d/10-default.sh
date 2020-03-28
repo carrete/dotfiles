@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
+XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+export XDG_DATA_HOME
+
+mkdir -p "$XDG_DATA_HOME"
+
 PATH=/usr/local/sbin:$PATH
 export PATH
 

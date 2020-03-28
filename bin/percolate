@@ -12,4 +12,15 @@ brew missing
 
 python3 -m pip install -U virtualenv virtualenvwrapper
 
+mkdir -p "$XDG_DATA_HOME"/tmux-plugins.d/tpm
+
+if [[ -z $(ls -A "$XDG_DATA_HOME"/tmux-plugins.d/tpm) ]]
+then
+  (cd "$XDG_DATA_HOME"/tmux-plugins.d/tpm && git clone git@github.com:tmux-plugins/tpm.git .)
+  "$XDG_DATA_HOME"/tmux-plugins.d/tpm/bin/install_plugins
+else
+  (cd "$XDG_DATA_HOME"/tmux-plugins.d/tpm && git pull --ff-only)
+  "$XDG_DATA_HOME"/tmux-plugins.d/tpm/bin/update_plugins all
+fi
+
 exit 0

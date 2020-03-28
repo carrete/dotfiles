@@ -16,3 +16,12 @@ if [ -n "$BASH_VERSION" ]; then
     . "$HOME/.bashrc"
   fi
 fi
+
+# https://github.com/direnv/direnv/wiki/Tmux
+alias tmux="direnv exec / tmux"
+
+case $TERM in
+xterm*)
+  [ -z "$TMUX" ] && { tmux attach-session -t default || exec tmux new-session -s default && exit; } || true
+  ;;
+esac

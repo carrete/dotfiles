@@ -3,4 +3,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-exec byobu new-session -d -s "$(basename "$1")-$$" "$@"
+unset TMUX
+
+tmux new-session -d -s rib-"$$" -- direnv exec "$PWD" "$@"
