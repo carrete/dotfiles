@@ -1,8 +1,12 @@
 #!/bin/sh -e
 # -*- coding: utf-8; mode: sh -*-
 REGISTRY=registry.gitlab.com
-CONTAINER=tvaughan/docker-ubuntu
-VERSION=18.04
+CONTAINER=tvaughan/docker-fedora
+VERSION=33
 CMD=bash  # $(basename $0)
-docker run --rm -it -v "$PWD":/mnt/workdir $REGISTRY/$CONTAINER:$VERSION $CMD "$@"
+docker run --name "scratch-$$" --rm -it -v "$PWD":/mnt/workdir                    \
+  $REGISTRY/$CONTAINER:$VERSION $CMD "$@"
 exit 0
+#   -e DISPLAY="$DISPLAY"                                                         \
+#   -v /private/tmp/.X11-unix:/tmp/.X11-unix:ro                                   \
+#   -v "$HOME"/.Xauthority:/root/.Xauthority:ro                                   \

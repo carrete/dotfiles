@@ -19,7 +19,15 @@ function on_error {
 
 trap 'on_error $? $LINENO' ERR
 
-mbsync "$@"
+ADDRS=${*:-
+tom@clubcannabis.cl
+tvaughan@tocino.cl
+}
+
+for ADDR in $ADDRS; do
+    mbsync --verbose "$ADDR"
+done
+
 mu index
 
 exit 0

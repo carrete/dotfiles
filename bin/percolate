@@ -1,16 +1,28 @@
 #!/usr/bin/env bash
-# -*- mode: sh; coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
+# -*- coding: utf-8; mode: bash -*-
 set -euo pipefail
 IFS=$'\n\t'
+readonly THIS="$(readlink -f "$0")"
 
-brew update
-brew bundle --file="$HOME"/.dotfiles/Brewfile --no-lock
+function on_exit() {
+    errcode="$1"
+}
+
+trap 'on_exit $?' EXIT
+
+function on_error() {
+    errcode=$1
+    linenum=$2
+    echo "[ERROR] $THIS: errcode: $errcode linenum: $linenum"
+}
+
+trap 'on_error $? $LINENO' ERR
+
+brew bundle --file="$HOME"/.dotfiles/Brewfile install --no-lock
+brew bundle --file="$HOME"/.dotfiles/Brewfile cleanup --force
 brew upgrade
-brew cask upgrade
 brew cleanup --prune=0
 brew missing
-
-python3 -m pip install -U virtualenv virtualenvwrapper
 
 mkdir -p "$XDG_DATA_HOME"/tmux-plugins.d/tpm
 

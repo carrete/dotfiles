@@ -3,8 +3,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-for cmd in container image; do
-    docker "$cmd" prune -f
+while true;
+do
+    "$@" || true
 done
 
 exit 0

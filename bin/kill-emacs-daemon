@@ -3,4 +3,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+PATH=/Applications/Emacs.app/Contents/MacOS/bin:"$PATH"
+export PATH
+
 emacsclient -e "(progn (setq kill-emacs-hook 'nil) (kill-emacs))"

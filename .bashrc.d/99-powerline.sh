@@ -30,6 +30,6 @@ function colors() {
     done
 }
 
-PS1='$(tput sgr0)[$(tput setaf 8)\u$(tput sgr0):$(tput setaf 4)$(tput bold)\w$(tput sgr0)]$(tput setaf 2)$(__git_ps1 " (%s)")$(tput sgr0)\n\$ '
+PS1='$(tput sgr0)[$(tput setaf 4)\u$(tput setaf 7)@$(tput setaf 6)\h$(tput sgr0):$(tput setaf 4)$(tput bold)\w$(tput sgr0)]$(tput setaf 2)$(__git_ps1 " (%s)")$(tput sgr0)\n\$ '
 
 export PS1

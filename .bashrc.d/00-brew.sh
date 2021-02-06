@@ -5,16 +5,13 @@ if command -v brew > /dev/null 2>&1; then
   readonly BREW_PREFIX=$(brew --prefix)
   export BREW_PREFIX
 
-  readonly BYOBU_PREFIX=$BREW_PREFIX
-  export BYOBU_PREFIX
-
   readonly HOMEBREW_INSTALL_CLEANUP=1
   export HOMEBREW_INSTALL_CLEANUP
 
   EXTRA_MANPATH=""
   EXTRA_PATH=""
 
-  for PACKAGE in coreutils curl findutils gawk gnu-sed gnu-tar make; do
+  for PACKAGE in coreutils curl findutils gawk gnu-sed gnu-tar grep make sqlite unzip; do
     PACKAGE_PATH=$BREW_PREFIX/opt/$PACKAGE
     LIBEXEC_PATH=$PACKAGE_PATH/libexec
     EXTRA_MANPATH=$PACKAGE_PATH/man:$LIBEXEC_PATH/gnuman:$EXTRA_MANPATH

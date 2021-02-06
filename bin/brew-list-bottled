@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+brew info --json=v1 --installed \
+    | jq -r "map(select(.installed[].poured_from_bottle == false) | .name) | unique | sort | .[]"

@@ -8,6 +8,9 @@
 GPG_TTY="$(tty)"
 export GPG_TTY
 
+# SSH_AUTH_SOCK="$HOME"/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+# export SSH_AUTH_SOCK
+
 SSH_ENVIRONMENT="$HOME"/.ssh/environment
 
 start_sshagent() {

@@ -12,7 +12,7 @@ export LANGUAGE
 LANG="en_US.UTF-8"
 export LANG
 
-LC_CTYPE=$LANG
+LC_CTYPE="$LANG"
 export LC_CTYPE
 
 LC_COLLATE="C"
